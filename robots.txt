@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: uploads/resume-1777316021783.pdf
