@@ -757,3 +757,69 @@ function useReveal(lang) {
     return () => clearTimeout(timer);
   }, [lang]);
 }
+
+// ── Translations ─────────────────────────────────────────────────
+const T = {
+  en: {
+    nav: { work: 'Work', about: 'About', experience: 'Experience', contact: 'Contact', resume: 'Résumé ↗' },
+    hero: {
+      tagline: 'Builder · Developer · Designer',
+      desc1: <>I build <strong>thoughtful digital experiences</strong> — from backend architecture to polished interfaces. I care about how things <strong>look and feel</strong>, not just how they work.</>,
+      cta: 'View Work ↓',
+      cv: 'Download CV ↗',
+      stats: [
+      { num: '2', unit: 'nd', label: 'Year at Epitech (July)' },
+      { num: '4', unit: '+', label: 'Projects built' },
+      { num: '1', unit: '+', label: 'Year of coding' }]
+
+    },
+    projects: { label: 'Selected Work', soon: 'Coming Soon', soonDesc: 'Next project in progress — check back shortly.' },
+    about: {
+      label: 'About',
+      p1: <>I'm Matthis, a developer student at <strong>Epitech Nice</strong>, heading into my 2nd year this July. I'm passionate about building clean, ambitious software — from low-level systems in C to AI-powered iOS apps in Swift.</>,
+      p2: <>I'm drawn to <strong>AI, cybersecurity, and finance</strong> — I like working at the intersection of those worlds. I've competed in hackathons, shipped freelance projects, and I'm always building something new.</>
+    },
+    skills: { label: 'Skills', cats: ['Languages', 'Tools & Env', 'Certifications', 'Interests'] },
+    experience: { label: 'Experience' },
+    contact: {
+      label: 'Contact',
+      heading1: "Let's",
+      heading2: 'TALK.',
+      desc: 'Open to internship opportunities starting July 2026, for 4 to 6 months. Also happy to chat about freelance projects or anything at the intersection of AI, cybersecurity and finance.',
+      resumeHandle: 'PDF · Download',
+      location: 'NICE, FRANCE · INTERNSHIP FROM JULY 2026 · 4–6 MONTHS'
+    },
+    footer: { copy: '© 2026 MATTHIS RODA — ALL RIGHTS RESERVED', back: 'BACK TO TOP ↑' }
+  },
+  fr: {
+    nav: { work: 'Projets', about: 'À propos', experience: 'Parcours', contact: 'Contact', resume: 'CV ↗' },
+    hero: {
+      tagline: 'Développeur · Designer · Créateur',
+      desc1: <>Je conçois des <strong>expériences digitales soignées</strong>. De l'architecture backend aux interfaces finies, j'accorde autant d'importance à la <strong>forme qu'au fond</strong>, au rendu qu'au fonctionnement.</>,
+      cta: 'Voir les projets ↓',
+      cv: 'Télécharger le CV ↗',
+      stats: [
+      { num: '2', unit: 'e', label: 'Année à Epitech (juillet)' },
+      { num: '4', unit: '+', label: 'Projets réalisés' },
+      { num: '1', unit: '+', label: 'An de développement' }]
+
+    },
+    projects: { label: 'Projets', soon: 'Bientôt', soonDesc: 'Prochain projet en cours — revenez vite.' },
+    about: {
+      label: 'À propos',
+      p1: <>Je m'appelle Matthis, étudiant développeur à <strong>Epitech Nice</strong>, en route vers ma 2e année en juillet. Je conçois des logiciels propres et ambitieux allant des systèmes bas niveau en C aux apps iOS augmentées par l'IA en Swift.</>,
+      p2: <>Mes domaines de prédilection : <strong>l'IA, la cybersécurité et la finance</strong>. J'aime travailler à l'intersection de ces univers mélangeant hackathons, projets freelance et expérimentations personnelles.</>
+    },
+    skills: { label: 'Compétences', cats: ['Langages', 'Outils & Environnement', 'Certifications', 'Centres d\'intérêt'] },
+    experience: { label: 'Parcours' },
+    contact: {
+      label: 'Contact',
+      heading1: 'Travaillons',
+      heading2: 'ENSEMBLE.',
+      desc: 'Disponible pour un stage à partir de juillet 2026, pour une durée de 4 à 6 mois. Ouvert aussi aux missions freelance ou à toute discussion autour de l\'IA, de la cybersécurité ou de la finance.',
+      resumeHandle: 'PDF · Télécharger',
+      location: 'NICE, FRANCE · STAGE JUILLET 2026 · 4–6 MOIS'
+    },
+    footer: { copy: '© 2026 MATTHIS RODA — TOUS DROITS RÉSERVÉS', back: 'HAUT DE PAGE ↑' }
+  }
+};
