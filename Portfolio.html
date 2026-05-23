@@ -789,7 +789,8 @@ const T = {
       resumeHandle: 'PDF · Download',
       location: 'NICE, FRANCE · INTERNSHIP FROM JULY 2026 · 4–6 MONTHS'
     },
-    footer: { copy: '© 2026 MATTHIS RODA — ALL RIGHTS RESERVED', back: 'BACK TO TOP ↑' }
+    footer: { copy: '© 2026 MATTHIS RODA — ALL RIGHTS RESERVED', back: 'BACK TO TOP ↑' },
+    resumeUrl: 'uploads/resumee EN_PORTFOLIO.pdf'
   },
   fr: {
     nav: { work: 'Projets', about: 'À propos', experience: 'Parcours', contact: 'Contact', resume: 'CV ↗' },
@@ -820,7 +821,8 @@ const T = {
       resumeHandle: 'PDF · Télécharger',
       location: 'NICE, FRANCE · STAGE JUILLET 2026 · 4–6 MOIS'
     },
-    footer: { copy: '© 2026 MATTHIS RODA — TOUS DROITS RÉSERVÉS', back: 'HAUT DE PAGE ↑' }
+    footer: { copy: '© 2026 MATTHIS RODA — TOUS DROITS RÉSERVÉS', back: 'HAUT DE PAGE ↑' },
+    resumeUrl: 'uploads/resumee FR_PORTFOLIO.pdf'
   }
 };
 
@@ -902,7 +904,7 @@ function Nav({ lang, setLang }) {
       </ul>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
         <LangToggle lang={lang} setLang={setLang} />
-        <a href="uploads/resumee FR_PORTFOLIO.pdf" target="_blank" className="nav-cta">{t.resume}</a>
+        <a href={T[lang].resumeUrl} target="_blank" rel="noopener noreferrer" className="nav-cta">{t.resume}</a>
       </div>
     </nav>);
 
@@ -1002,7 +1004,7 @@ function Hero({ tweaks, lang }) {
         </div>
         <div className="hero-btns reveal reveal-d4">
           <a href="#projects" className="btn-primary">{t.cta}</a>
-          <a href="uploads/resumee FR_PORTFOLIO.pdf" target="_blank" className="btn-secondary">{t.cv}</a>
+          <a href={T[lang].resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-secondary">{t.cv}</a>
         </div>
       </div>
 
@@ -1013,12 +1015,12 @@ function Hero({ tweaks, lang }) {
           )}
         </div>
         <div className="hero-links reveal reveal-d2">
-          <a href="https://github.com/MattRoda" target="_blank" className="hero-link-row">
+          <a href="https://github.com/MattRoda" target="_blank" rel="noopener noreferrer" className="hero-link-row">
             <span className="hero-link-label">GitHub</span>
             <span className="hero-link-val">MattRoda</span>
             <span className="hero-link-arrow">→</span>
           </a>
-          <a href="https://linkedin.com/in/matthis-roda" target="_blank" className="hero-link-row">
+          <a href="https://linkedin.com/in/matthis-roda" target="_blank" rel="noopener noreferrer" className="hero-link-row">
             <span className="hero-link-label">LinkedIn</span>
             <span className="hero-link-val">matthis-roda</span>
             <span className="hero-link-arrow">→</span>
@@ -1139,21 +1141,21 @@ function Contact({ lang }) {
         </div>
         <div className="contact-right">
           <div className="social-links reveal reveal-d1">
-            <a href="https://github.com/MattRoda" target="_blank" className="social-link">
+            <a href="https://github.com/MattRoda" target="_blank" rel="noopener noreferrer" className="social-link">
               <div>
                 <div className="social-link-name">GitHub</div>
                 <div className="social-link-handle">github.com/MattRoda</div>
               </div>
               <span style={{ color: 'var(--muted)', fontSize: 18 }}>↗</span>
             </a>
-            <a href="https://linkedin.com/in/matthis-roda" target="_blank" className="social-link">
+            <a href="https://linkedin.com/in/matthis-roda" target="_blank" rel="noopener noreferrer" className="social-link">
               <div>
                 <div className="social-link-name">LinkedIn</div>
                 <div className="social-link-handle">linkedin.com/in/matthis-roda</div>
               </div>
               <span style={{ color: 'var(--muted)', fontSize: 18 }}>↗</span>
             </a>
-            <a href="uploads/resumee FR_PORTFOLIO.pdf" target="_blank" className="social-link">
+            <a href={T[lang].resumeUrl} target="_blank" rel="noopener noreferrer" className="social-link">
               <div>
                 <div className="social-link-name">Résumé</div>
                 <div className="social-link-handle">{t.resumeHandle}</div>
