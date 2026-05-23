@@ -700,3 +700,35 @@ footer {
   transition: color 0.2s;
 }
 .footer-back:hover { color: var(--red); }
+
+/* Mobile */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  #hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-right { padding: 40px 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { border-right: none !important; }
+  #about { grid-template-columns: 1fr; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 24px; }
+  .about-right { padding: 48px 24px; }
+  #experience { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
+  .contact-inner { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 24px; }
+  .contact-right { padding: 48px 24px; }
+  footer { padding: 16px 24px; }
+  .sec-header { padding: 32px 24px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div id="top-stripe"></div>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+
+const { useState, useEffect, useRef } = React;
