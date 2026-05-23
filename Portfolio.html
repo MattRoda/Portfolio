@@ -869,3 +869,350 @@ const SKILLS_DATA = {
   { cat: 'Centres d\'intérêt', items: ['IA', 'Cybersécurité', 'Finance', 'Entrepreneuriat', 'Formule 1'] }]
 
 };
+
+// ── Components ───────────────────────────────────────────────────
+
+function LangToggle({ lang, setLang }) {
+  return (
+    <button
+      onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
+      style={{
+        background: 'none', border: '1px solid var(--border)', color: 'var(--muted)',
+        fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: '0.1em',
+        padding: '5px 12px', cursor: 'pointer', transition: 'border-color 0.2s, color 0.2s'
+      }}
+      onMouseEnter={(e) => {e.target.style.borderColor = 'var(--red)';e.target.style.color = 'var(--red)';}}
+      onMouseLeave={(e) => {e.target.style.borderColor = 'var(--border)';e.target.style.color = 'var(--muted)';}}>
+      
+      {lang === 'en' ? 'FR' : 'EN'}
+    </button>);
+
+}
+
+function Nav({ lang, setLang }) {
+  const t = T[lang].nav;
+  return (
+    <nav>
+      <a href="#" className="nav-logo">MATTHIS RODA</a>
+      <ul className="nav-links">
+        <li><a href="#projects">{t.work}</a></li>
+        <li><a href="#about">{t.about}</a></li>
+        <li><a href="#experience">{t.experience}</a></li>
+        <li><a href="#contact">{t.contact}</a></li>
+      </ul>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <LangToggle lang={lang} setLang={setLang} />
+        <a href="uploads/resume-1777316021783.pdf" target="_blank" className="nav-cta">{t.resume}</a>
+      </div>
+    </nav>);
+
+}
+
+// ── StatCounter — driven by shared progress prop ────────────────
+function StatCounter({ num, unit, label, progress }) {
+  const target = parseInt(num, 10);
+  const display = Math.round((1 - Math.pow(1 - Math.min(progress, 1), 3)) * target);
+  return (
+    <div className="hero-stat">
+      <div className="hero-stat-num">{display}<span>{unit}</span></div>
+      <div className="hero-stat-label">{label}</div>
+    </div>
+  );
+}
+
+// ── TiltCard — 3D perspective tilt on hover ──────────────────────
+function TiltCard({ children, className, href }) {
+  const ref = useRef(null);
+
+  const handleMove = (e) => {
+    const card = ref.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 7}deg) translateZ(6px)`;
+    card.style.boxShadow = `${-x * 12}px ${-y * 12}px 30px rgba(0,0,0,0.5)`;
+  };
+
+  const handleLeave = () => {
+    const card = ref.current;
+    if (!card) return;
+    card.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+    card.style.boxShadow = 'none';
+  };
+
+  return (
+    <a ref={ref} href={href} className={className}
+      onMouseMove={handleMove} onMouseLeave={handleLeave}
+      style={{textDecoration:'none'}}>
+      {children}
+    </a>
+  );
+}
+
+function Hero({ tweaks, lang }) {
+  const t = T[lang].hero;
+  const [progress, setProgress] = useState(0);
+  const statsRef = useRef(null);
+
+  useEffect(() => {
+    setProgress(0);
+    let raf;
+    const DURATION = 1400;
+
+    const startAnim = () => {
+      let start = null;
+      const step = (ts) => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / DURATION, 1);
+        setProgress(p);
+        if (p < 1) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    };
+
+    const container = statsRef.current;
+    if (!container) return;
+
+    if (container.classList.contains('visible')) {
+      startAnim();
+    } else {
+      const mut = new MutationObserver(() => {
+        if (container.classList.contains('visible')) {
+          mut.disconnect();
+          startAnim();
+        }
+      });
+      mut.observe(container, { attributes: true, attributeFilter: ['class'] });
+      return () => { mut.disconnect(); cancelAnimationFrame(raf); };
+    }
+    return () => cancelAnimationFrame(raf);
+  }, [lang]);
+  return (
+    <section id="hero">
+      <div className="hero-left">
+        <div>
+          <p className="hero-tagline reveal">{t.tagline}</p>
+          <h1 className="hero-name reveal reveal-d1">
+            <em>Matthis</em>
+            RODA.
+          </h1>
+          <div className="hero-rule reveal reveal-d2"><div></div><div></div></div>
+          <p className="hero-desc reveal reveal-d3" style={{ margin: "0px", color: "rgb(87, 86, 85)" }}>{t.desc1}</p>
+        </div>
+        <div className="hero-btns reveal reveal-d4">
+          <a href="#projects" className="btn-primary">{t.cta}</a>
+          <a href="uploads/resume-1777316021783.pdf" target="_blank" className="btn-secondary">{t.cv}</a>
+        </div>
+      </div>
+
+      <div className="hero-right">
+        <div className="hero-stats reveal reveal-d1" ref={statsRef}>
+          {t.stats.map((s, i) =>
+          <StatCounter key={i} num={s.num} unit={s.unit} label={s.label} progress={progress} />
+          )}
+        </div>
+        <div className="hero-links reveal reveal-d2">
+          <a href="https://github.com/MattRoda" target="_blank" className="hero-link-row">
+            <span className="hero-link-label">GitHub</span>
+            <span className="hero-link-val">MattRoda</span>
+            <span className="hero-link-arrow">→</span>
+          </a>
+          <a href="https://linkedin.com/in/matthis-roda" target="_blank" className="hero-link-row">
+            <span className="hero-link-label">LinkedIn</span>
+            <span className="hero-link-val">matthis-roda</span>
+            <span className="hero-link-arrow">→</span>
+          </a>
+          <a href="mailto:matthis.roda@epitech.eu" className="hero-link-row">
+            <span className="hero-link-label">Email</span>
+            <span className="hero-link-val">matthis.roda@epitech.eu</span>
+            <span className="hero-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>);
+
+}
+
+function Projects({ lang }) {
+  const t = T[lang].projects;
+  const projects = PROJECTS[lang];
+  const placeholders = [
+  { num: '05', title: t.soon, desc: t.soonDesc, tags: [], year: '—' },
+  { num: '06', title: t.soon, desc: t.soonDesc, tags: [], year: '—' }];
+
+  const all = [...projects, ...placeholders];
+  return (
+    <section id="projects">
+      <div className="sec-header">
+        <span className="sec-title sec-label"><span className="sec-num">01 —</span> {t.label}</span>
+        <span className="sec-label">2025 – 2026</span>
+      </div>
+      <div className="projects-grid">
+        {all.map((p, i) =>
+        <TiltCard href="#" key={p.num} className={`project-card reveal reveal-d${Math.min(i + 1, 5)}`}>
+            <div className="project-num">
+              <span className="project-num-val">{p.num}</span>
+              <span>{p.year}</span>
+            </div>
+            <div>
+              <h3 className="project-title">{p.title}</h3>
+              <p className="project-desc">{p.desc}</p>
+            </div>
+            <div className="project-tags">
+              {p.tags.map((t) => <span key={t} className="tag">{t}</span>)}
+            </div>
+          </TiltCard>
+        )}
+      </div>
+    </section>);
+
+}
+
+function About({ lang }) {
+  const t = T[lang].about;
+  const skills = SKILLS_DATA[lang];
+  return (
+    <section id="about">
+      <div className="about-left">
+        <span className="sec-label reveal"><span className="sec-num">02 —</span> {t.label}</span>
+        <p className="about-body reveal reveal-d1">{t.p1}</p>
+        <p className="about-body reveal reveal-d2" style={{ marginTop: 0 }}>{t.p2}</p>
+      </div>
+      <div className="about-right">
+        <span className="sec-label reveal"><span className="sec-num">03 —</span> {T[lang].skills.label}</span>
+        <div className="skills-grid">
+          {skills.map((group, i) =>
+          <div key={group.cat} className={`reveal reveal-d${i + 1}`}>
+              <p className="skill-group-label">{group.cat}</p>
+              <div className="skill-pills">
+                {group.items.map((s) => <span key={s} className="skill-pill">{s}</span>)}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+function Experience({ lang }) {
+  const t = T[lang].experience;
+  const exp = EXPERIENCE[lang];
+  return (
+    <section id="experience">
+      <div>
+        <span className="sec-label reveal"><span className="sec-num">04 —</span> {t.label}</span>
+      </div>
+      <div className="timeline reveal reveal-d1">
+        {exp.map((e, i) =>
+        <div key={i} className="timeline-item">
+            <div className="timeline-dot"></div>
+            <p className="timeline-year">{e.year}</p>
+            <h3 className="timeline-role">{e.role}</h3>
+            <p className="timeline-org">{e.org}</p>
+            <p className="timeline-detail">{e.detail}</p>
+          </div>
+        )}
+      </div>
+    </section>);
+
+}
+
+function Contact({ lang }) {
+  const t = T[lang].contact;
+  return (
+    <section id="contact">
+      <div className="contact-inner">
+        <div className="contact-left">
+          <div>
+            <span className="sec-label reveal"><span className="sec-num">05 —</span> {t.label}</span>
+            <h2 className="contact-heading reveal reveal-d1">
+              <em>{t.heading1}</em>
+              {t.heading2}
+            </h2>
+          </div>
+          <div className="reveal reveal-d2">
+            <p style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.8, marginBottom: 20 }}>{t.desc}</p>
+            <a href="mailto:matthis.roda@epitech.eu" className="contact-email">matthis.roda@epitech.eu</a>
+          </div>
+        </div>
+        <div className="contact-right">
+          <div className="social-links reveal reveal-d1">
+            <a href="https://github.com/MattRoda" target="_blank" className="social-link">
+              <div>
+                <div className="social-link-name">GitHub</div>
+                <div className="social-link-handle">github.com/MattRoda</div>
+              </div>
+              <span style={{ color: 'var(--muted)', fontSize: 18 }}>↗</span>
+            </a>
+            <a href="https://linkedin.com/in/matthis-roda" target="_blank" className="social-link">
+              <div>
+                <div className="social-link-name">LinkedIn</div>
+                <div className="social-link-handle">linkedin.com/in/matthis-roda</div>
+              </div>
+              <span style={{ color: 'var(--muted)', fontSize: 18 }}>↗</span>
+            </a>
+            <a href="uploads/resume-1777316021783.pdf" target="_blank" className="social-link">
+              <div>
+                <div className="social-link-name">Résumé</div>
+                <div className="social-link-handle">{t.resumeHandle}</div>
+              </div>
+              <span style={{ color: 'var(--muted)', fontSize: 18 }}>↗</span>
+            </a>
+          </div>
+          <p className="reveal reveal-d2" style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--muted)', letterSpacing: '0.1em', marginTop: 40 }}>{t.location}</p>
+        </div>
+      </div>
+    </section>);
+
+}
+
+function Footer({ lang }) {
+  const t = T[lang].footer;
+  return (
+    <footer>
+      <span className="footer-copy">{t.copy}</span>
+      <a href="#" className="footer-back">{t.back}</a>
+    </footer>);
+
+}
+
+// ── App ──────────────────────────────────────────────────────────
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [lang, setLang] = useState('fr');
+
+  useReveal(lang);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--red', tweaks.accentColor);
+  }, [tweaks.accentColor]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--bg', tweaks.darkBg ? '#0d0d0d' : '#111827');
+  }, [tweaks.darkBg]);
+
+  return (
+    <>
+      <Nav lang={lang} setLang={setLang} />
+      <Hero tweaks={tweaks} lang={lang} />
+      <Projects lang={lang} />
+      <About lang={lang} />
+      <Experience lang={lang} />
+      <Contact lang={lang} />
+      <Footer lang={lang} />
+
+      <TweaksPanel>
+        <TweakSection title="Brand">
+          <TweakColor id="accentColor" label="Accent color" value={tweaks.accentColor} onChange={(v) => setTweak('accentColor', v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
