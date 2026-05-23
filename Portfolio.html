@@ -518,3 +518,71 @@ nav {
   transition: border-color 0.2s, background 0.2s;
 }
 .skill-pill:hover { border-color: var(--red); background: rgba(192,57,43,0.08); }
+
+/* ─── EXPERIENCE ─── */
+#experience {
+  padding: 72px 48px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline {
+  margin-top: 28px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-item {
+  padding-left: 24px;
+  padding-bottom: 40px;
+  position: relative;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -4px; top: 8px;
+  width: 9px; height: 9px;
+  border: 1px solid var(--red);
+  background: var(--bg);
+  transform: rotate(45deg);
+  transition: background 0.2s;
+}
+.timeline-item:hover .timeline-dot { background: var(--red); }
+
+.timeline-year {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.timeline-role {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.timeline-org {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.timeline-detail {
+  font-size: 13px;
+  color: var(--faint);
+  line-height: 1.7;
+}
