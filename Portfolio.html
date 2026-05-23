@@ -339,3 +339,106 @@ nav {
   color: var(--red);
   transform: translateX(3px);
 }
+
+/* ─── PROJECTS ─── */
+#projects {
+  border-bottom: 1px solid var(--border);
+}
+
+.sec-header {
+  padding: 48px 48px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+
+.sec-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.project-card {
+  padding: 36px 40px 32px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+  transition: background 0.3s, transform 0.12s ease-out, box-shadow 0.12s ease-out;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+.project-card:nth-child(3n) { border-right: none; }
+.project-card:hover { background: var(--bg3); }
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(.25,.46,.45,.94);
+}
+.project-card:hover::before { transform: scaleX(1); }
+
+.project-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-num-val { color: var(--red); }
+
+.project-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  transition: border-color 0.2s, color 0.2s;
+}
+.project-card:hover .tag { border-color: var(--faint); color: var(--text); }
