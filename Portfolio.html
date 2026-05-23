@@ -442,3 +442,46 @@ nav {
   transition: border-color 0.2s, color 0.2s;
 }
 .project-card:hover .tag { border-color: var(--faint); color: var(--text); }
+
+/* ─── ABOUT ─── */
+#about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-left {
+  padding: 72px 48px;
+  border-right: 1px solid var(--border);
+}
+
+.about-body {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-top: 28px;
+  margin-bottom: 28px;
+}
+.about-body strong { color: var(--text); font-weight: 400; }
+
+.design-past-callout {
+  border-left: 2px solid var(--red);
+  padding: 16px 20px;
+  background: rgba(192,57,43,0.06);
+  margin-top: 32px;
+}
+.design-past-callout p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  font-style: italic;
+}
+.design-past-callout p strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.about-right {
+  padding: 72px 48px;
+}
